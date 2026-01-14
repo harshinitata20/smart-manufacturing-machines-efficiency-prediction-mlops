@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Manufacturing Efficiency Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #34495e;
+        }
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏭 Smart Manufacturing Efficiency Predictor</h1>
+        
+        <form id="predictionForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Operation_Mode">Operation Mode (0=Idle, 1=Active):</label>
+                    <select id="Operation_Mode" name="Operation_Mode" required>
+                        <option value="">Select Mode</option>
+                        <option value="0">Idle</option>
+                        <option value="1">Active</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="Temperature_C">Temperature (°C):</label>
+                    <input type="number" id="Temperature_C" name="Temperature_C" step="0.01" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Vibration_Hz">Vibration (Hz):</label>
+                    <input type="number" id="Vibration_Hz" name="Vibration_Hz" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="Power_Consumption_kW">Power Consumption (kW):</label>
+                    <input type="number" id="Power_Consumption_kW" name="Power_Consumption_kW" step="0.01" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Network_Latency_ms">Network Latency (ms):</label>
+                    <input type="number" id="Network_Latency_ms" name="Network_Latency_ms" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="Packet_Loss_%">Packet Loss (%):</label>
+                    <input type="number" id="Packet_Loss_%" name="Packet_Loss_%" step="0.01" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Quality_Control_Defect_Rate_%">Quality Control Defect Rate (%):</label>
+                    <input type="number" id="Quality_Control_Defect_Rate_%" name="Quality_Control_Defect_Rate_%" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="Production_Speed_units_per_hr">Production Speed (units/hr):</label>
+                    <input type="number" id="Production_Speed_units_per_hr" name="Production_Speed_units_per_hr" step="0.01" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Predictive_Maintenance_Score">Predictive Maintenance Score:</label>
+                    <input type="number" id="Predictive_Maintenance_Score" name="Predictive_Maintenance_Score" step="0.01" min="0" max="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="Error_Rate_%">Error Rate (%):</label>
+                    <input type="number" id="Error_Rate_%" name="Error_Rate_%" step="0.01" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Year">Year:</label>
+                    <input type="number" id="Year" name="Year" value="2024" required>
+                </div>
+                <div class="form-group">
+                    <label for="Month">Month:</label>
+                    <input type="number" id="Month" name="Month" min="1" max="12" value="1" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Day">Day:</label>
+                    <input type="number" id="Day" name="Day" min="1" max="31" value="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="Hour">Hour:</label>
+                    <input type="number" id="Hour" name="Hour" min="0" max="23" value="12" required>
+                </div>
+            </div>
+
+            <button type="submit">🔮 Predict Efficiency</button>
+        </form>
+
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = {};
+            
+            for (let [key, value] of formData.entries()) {
+                data[key] = parseFloat(value);
+            }
+            
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                const resultDiv = document.getElementById('result');
+                
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        <h3>🎯 Prediction Result</h3>
+                        <p><strong>Efficiency Status:</strong> ${result.prediction}</p>
+                        <p><strong>Confidence:</strong> ${(result.confidence * 100).toFixed(2)}%</p>
+                        <p><strong>Probabilities:</strong></p>
+                        <ul>
+                            <li>Low Efficiency: ${(result.probabilities['Low Efficiency'] * 100).toFixed(2)}%</li>
+                            <li>Medium Efficiency: ${(result.probabilities['Medium Efficiency'] * 100).toFixed(2)}%</li>
+                            <li>High Efficiency: ${(result.probabilities['High Efficiency'] * 100).toFixed(2)}%</li>
+                        </ul>
+                    `;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `<p>Error: ${result.error}</p>`;
+                }
+                
+                resultDiv.style.display = 'block';
+                
+            } catch (error) {
+                const resultDiv = document.getElementById('result');
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+                resultDiv.style.display = 'block';
+            }
+        });
+
+        // Fill in sample data
+        function fillSampleData() {
+            document.getElementById('Operation_Mode').value = '1';
+            document.getElementById('Temperature_C').value = '75.5';
+            document.getElementById('Vibration_Hz').value = '2.8';
+            document.getElementById('Power_Consumption_kW').value = '5.2';
+            document.getElementById('Network_Latency_ms').value = '15.3';
+            document.getElementById('Packet_Loss_%').value = '1.2';
+            document.getElementById('Quality_Control_Defect_Rate_%').value = '3.5';
+            document.getElementById('Production_Speed_units_per_hr').value = '350';
+            document.getElementById('Predictive_Maintenance_Score').value = '0.85';
+            document.getElementById('Error_Rate_%').value = '5.2';
+        }
+
+        // Add sample data button
+        window.onload = function() {
+            const button = document.createElement('button');
+            button.textContent = '📝 Fill Sample Data';
+            button.type = 'button';
+            button.style.backgroundColor = '#27ae60';
+            button.style.marginTop = '10px';
+            button.onclick = fillSampleData;
+            document.querySelector('.container').appendChild(button);
+        };
+    </script>
+</body>
+</html>
